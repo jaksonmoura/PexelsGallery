@@ -1,5 +1,4 @@
-import logo from './logo.svg'
-import './assets/App.css'
+import './assets/css/App.css'
 import LandingPage from './containers/LandingPage'
 
 function App() {

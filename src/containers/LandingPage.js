@@ -1,4 +1,4 @@
-import React, {useState, useEffect, createContext} from 'react'
+import React, {useState, useEffect, createContext, useMemo, useCallback} from 'react'
 import {key} from '../PEXELS_KEY.json'
 import mockdata from '../mockdata.json'
 import Header from '../components/Header'
@@ -10,8 +10,10 @@ export const GalleryContext = createContext()
 
 function LandingPage(){
     
-    const searchPhotosUrl = "https://api.pexels.com/v1/search?query=nature"
+    const searchPhotosUrl = "https://api.pexels.com/v1/search?query="
     const curratedPhotosUrl = "https://api.pexels.com/v1/curated?per_page=1"
+    const [searchTerm, setSearchTerm] = useState("")
+    const searchTermRef = React.useRef("")
     const [photosData, setPhotosData] = useState({
         next_page: "",
         page: 1,
@@ -63,13 +65,45 @@ function LandingPage(){
             "liked": false
         }
     ])
+
+    const onSearchSubmit = (event, str) =>{
+        event.preventDefault()
+        let query = str || event.target.searchTerm.value
+        let nextTitle = "PexelsGallery"
+        let nextURL = ""
+        if (query){
+            // fetchData(`${searchPhotosUrl}=${query}`, false)
+            nextTitle += " - Search for "+ query
+            nextURL = "/?query=" + query
+        } else {
+            // fetchData(curratedPhotosUrl, false)
+        }
+        searchTermRef.current.value = query
+        changeSearchTerm(query);
+         
+        window.history.pushState("", nextTitle, nextURL);
+    }
+
+    const changeSearchTerm = useCallback((str) => {
+        setSearchTerm(str)
+    }, [])
     
     useEffect(() => {
-        // fetchData(searchPhotosUrl);
+        let urlQuery = window.location.search
+        if (urlQuery){
+            urlQuery = urlQuery.split("=")[1]
+            console.log(urlQuery)
+            searchTermRef.current.value = urlQuery
+            setSearchTerm(urlQuery)
+            // fetchData(`${searchPhotosUrl}=${urlQuery}`, false)
+        } else {
+            // fetchData(curratedPhotosUrl)
+        }
+        console.log(window.location.search)
         setPhotos(mockdata)
     }, [])
 
-    const fetchData = async (url) => {
+    const fetchData = async (url, append = true) => {
         // Had to use async because setPhotos, apparently,
         // was firing before data was downloaded
         const response = await fetch(url, {
@@ -80,13 +114,16 @@ function LandingPage(){
         })
         response.json().then(data => {
             setPhotosData(data)
-            setPhotos(prevState => {
-                return [
-                    ...prevState,
-                    ...data.photos
-                ]
-            })
-            console.log(photos)
+            if (append){
+                setPhotos(prevState => {
+                    return [
+                        ...prevState,
+                        ...data.photos
+                    ]
+                })
+            } else {
+                setPhotos(data.photos)
+            }
         })
     }
 
@@ -104,15 +141,17 @@ function LandingPage(){
 
     return(
         <GalleryContext.Provider value={{
-            // searchTerm,
-            // setSearchTerm,
+            searchTerm,
+            searchTermRef,
+            setSearchTerm,
             searchPhotosUrl,
             curratedPhotosUrl,
             photosData,
             setPhotosData,
             photos,
             setPhotos,
-            loadMorePhotos
+            loadMorePhotos,
+            onSearchSubmit
         }}>
         <Header />
         <main>

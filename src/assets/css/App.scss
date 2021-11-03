@@ -211,11 +211,13 @@ header{
             padding: 16px;
             display: inline-flex;
             justify-content: space-between;
+            align-items: flex-end;
             text-shadow: 1px 1px 10px rgba(black, .7);
             pointer-events: none;
             transition: all .2s ease-in-out;
             z-index: 0;
             font-weight: 300;
+            gap: 10px;
 
             opacity: 0;
             visibility: none;
@@ -233,10 +235,19 @@ header{
                     transition: all .2s ease-in-out;
                 }
 
+                span{
+                    width: calc(100% - 54px)
+                }
+
             a{
                 color: #fff;
                 font-weight: 500;
                 pointer-events: auto;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                width: 100%;
+                display: block;
+                overflow: hidden;
             }
 
             a.download-photo{
@@ -245,6 +256,8 @@ header{
                 justify-content: center;
                 text-shadow: none;
                 width: 44px;
+                height: 44px;
+                min-width: 44px;
                 text-align: center;
                 border: none;
                 border-radius: 10px;

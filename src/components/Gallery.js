@@ -13,7 +13,6 @@ export const SearchContext = createContext()
 
 function Gallery(){
     const gallery = useContext(GalleryContext)
-    const [searchTerm, setSearchTerm] = useState("Curated")
     
 
     const PhotoCard = (props) => {
@@ -34,13 +33,9 @@ function Gallery(){
     }
 
     return(
-        <SearchContext.Provider value={{
-            searchTerm, 
-            setSearchTerm
-        }}>
         <section className="gallery">
             <div className="container">
-                <h1>{gallery.searchTerm}</h1>
+                <h1>{gallery.searchTerm ? `Photos of "${gallery.searchTerm}"` : "Curated"}</h1>
                 <Masonry
                     breakpointCols={breakpointColumnsObj}
                     className="my-masonry-grid"
@@ -54,7 +49,6 @@ function Gallery(){
             
             <button className="load-more" onClick={gallery.loadMorePhotos}>Load more photos...</button>
         </section>
-        </SearchContext.Provider>
     )
 }
 
