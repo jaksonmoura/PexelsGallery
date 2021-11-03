@@ -11,7 +11,7 @@ export const GalleryContext = createContext()
 function LandingPage(){
     
     const searchPhotosUrl = "https://api.pexels.com/v1/search?query="
-    const curratedPhotosUrl = "https://api.pexels.com/v1/curated?per_page=1"
+    const curratedPhotosUrl = "https://api.pexels.com/v1/curated?per_page=18"
     const [searchTerm, setSearchTerm] = useState("")
     const searchTermRef = React.useRef("")
     const [photosData, setPhotosData] = useState({
@@ -72,11 +72,11 @@ function LandingPage(){
         let nextTitle = "PexelsGallery"
         let nextURL = ""
         if (query){
-            // fetchData(`${searchPhotosUrl}=${query}`, false)
+            fetchData(`${searchPhotosUrl}=${query}`, false)
             nextTitle += " - Search for "+ query
             nextURL = "/?query=" + query
         } else {
-            // fetchData(curratedPhotosUrl, false)
+            fetchData(curratedPhotosUrl, false)
         }
         searchTermRef.current.value = query
         changeSearchTerm(query);
@@ -95,12 +95,12 @@ function LandingPage(){
             console.log(urlQuery)
             searchTermRef.current.value = urlQuery
             setSearchTerm(urlQuery)
-            // fetchData(`${searchPhotosUrl}=${urlQuery}`, false)
+            fetchData(`${searchPhotosUrl}=${urlQuery}`, false)
         } else {
-            // fetchData(curratedPhotosUrl)
+            fetchData(curratedPhotosUrl, false)
         }
-        console.log(window.location.search)
-        setPhotos(mockdata)
+        // console.log(window.location.search)
+        // setPhotos(mockdata)
     }, [])
 
     const fetchData = async (url, append = true) => {
@@ -129,13 +129,13 @@ function LandingPage(){
 
     const loadMorePhotos = (event) =>{
         event.preventDefault()
-        // let nextPage =  fetchData(photosData.next_page);
-        setPhotos(prevState => {
-            return [
-                ...prevState,
-                ...mockdata
-            ]
-        })
+        let nextPage =  fetchData(photosData.next_page);
+        // setPhotos(prevState => {
+        //     return [
+        //         ...prevState,
+        //         ...mockdata
+        //     ]
+        // })
     }
 
 
@@ -153,11 +153,11 @@ function LandingPage(){
             loadMorePhotos,
             onSearchSubmit
         }}>
-        <Header />
-        <main>
-            <Search />
-            <Gallery />
-        </main>
+            <Header />
+            <main>
+                <Search />
+                <Gallery />
+            </main>
         </GalleryContext.Provider>
     )
 }
