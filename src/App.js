@@ -1,12 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
-import Gallery from './Gallery';
+import logo from './logo.svg'
+import './assets/App.css'
+import LandingPage from './containers/LandingPage'
 
 function App() {
 
   return (
-    <Gallery />
+    <>
+      <LandingPage />
+    </>
   );
 }
 
-export default App;
+export default App
