@@ -1,32 +1,36 @@
-import React, {useContext} from 'react'
+import React, {useContext, createContext} from 'react'
 import {GalleryContext} from '../containers/LandingPage';
-import {SearchContext} from './Gallery';
 
 function Search(){
     const gallery = useContext(GalleryContext)
-    const search = useContext(SearchContext)
+    // const search = createContext(SearchContext)
+    const preQueries = [
+        'nature',
+        'food',
+        'architecture',
+        'people'
+    ]
 
-    const onSearchSubmit = (event, query) =>{
-        event.preventDefault()
-        if (query){
-            console.log(query)
-        }
+    const QueryItem = (props) => {
+        return(
+            <li><a href={"#"+props.query} onClick={e => {gallery.onSearchSubmit(e, props.query)}}>#{props.query}</a></li>
+        )
     }
 
     return(
         <section className="search">
             <div className="container">
-                <form action="" onSubmit={onSearchSubmit}>
+                <form method="get" action="" onSubmit={(e) => {gallery.onSearchSubmit(e)}}>
                     <div className="search-field">
-                        <input aria-label="Search" type="search" onChange={(e) => search.setSearchTerm(e.target.value)} name="query" placeholder="Search for free photos" />
+                        <input aria-label="Search" ref={gallery.searchTermRef} type="search" id="searchTerm" name="searchTerm" placeholder="Search for free photos" />
                         <button aria-label="Search"><i className="material-icons">search</i></button>
                     </div>
-                    <p>{search.searchTerm}</p>
                     <ul className="pre-queries">
-                        <li><a href="#nature" onClick={(e) => onSearchSubmit(e, "nature")}>#nature</a></li>
-                        <li><a href="#food" onClick={(e) => onSearchSubmit(e, "food")}>#food</a></li>
-                        <li><a href="#architecture" onClick={(e) => onSearchSubmit(e, "architecture")}>#architecture</a></li>
-                        <li><a href="#people" onClick={(e) => onSearchSubmit(e, "people")}>#people</a></li>
+                        {preQueries.map((pq, i) => <QueryItem key={i} query={pq} />)}
+                        {/* <li><a href="#nature" value="nature" onClick={gallery.onSearchSubmit}>#nature</a></li>
+                        <li><a href="#food" value="food" onClick={gallery.onSearchSubmit}>#food</a></li>
+                        <li><a href="#architecture" value="architecture" onClick={gallery.onSearchSubmit}>#architecture</a></li>
+                        <li><a href="#people" value="people" onClick={gallery.onSearchSubmit}>#people</a></li> */}
                     </ul>
                 </form>
             </div>

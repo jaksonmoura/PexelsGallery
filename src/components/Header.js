@@ -1,4 +1,5 @@
 import React from 'react'
+import github from '../assets/imgs/github.svg'
 
 function Header() {
     return(
@@ -8,7 +9,7 @@ function Header() {
                 <nav>
                     <ul>
                     <li><a href="#">about</a></li>
-                    <li><a href="#git">github</a></li>
+                    <li><a href="#git"><img src={github} /></a></li>
                     </ul>
                 </nav>
             </div>
