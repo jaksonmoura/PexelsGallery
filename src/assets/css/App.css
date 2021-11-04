@@ -322,6 +322,16 @@ header nav ul a:hover, header nav ul a:focus-visible {
   font-family: inherit;
 }
 
+.error-msg {
+  text-align: center;
+  margin: 100px 0;
+  color: #666;
+}
+.error-msg .emoji {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
 @-webkit-keyframes photoFadeIn {
   0% {
     opacity: 0;
