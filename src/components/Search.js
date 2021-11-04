@@ -1,9 +1,8 @@
 import React, {useContext, createContext} from 'react'
-import {GalleryContext} from '../containers/LandingPage';
+import {GalleryContext} from '../containers/Home';
 
 function Search(){
     const gallery = useContext(GalleryContext)
-    // const search = createContext(SearchContext)
     const preQueries = [
         'nature',
         'food',
@@ -25,12 +24,8 @@ function Search(){
                         <input aria-label="Search" ref={gallery.searchTermRef} type="search" id="searchTerm" name="searchTerm" placeholder="Search for free photos" />
                         <button aria-label="Search"><i className="material-icons">search</i></button>
                     </div>
-                    <ul className="pre-queries">
+                    <ul className="pre-queries" aria-label="Search suggestions">
                         {preQueries.map((pq, i) => <QueryItem key={i} query={pq} />)}
-                        {/* <li><a href="#nature" value="nature" onClick={gallery.onSearchSubmit}>#nature</a></li>
-                        <li><a href="#food" value="food" onClick={gallery.onSearchSubmit}>#food</a></li>
-                        <li><a href="#architecture" value="architecture" onClick={gallery.onSearchSubmit}>#architecture</a></li>
-                        <li><a href="#people" value="people" onClick={gallery.onSearchSubmit}>#people</a></li> */}
                     </ul>
                 </form>
             </div>

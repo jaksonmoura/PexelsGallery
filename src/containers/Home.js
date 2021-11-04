@@ -153,14 +153,10 @@ function LandingPage(){
             loadMorePhotos,
             onSearchSubmit
         }}>
-            <Header />
-            <main>
-                <Search />
-                <Gallery />
-            </main>
+            <Search />
+            <Gallery />
         </GalleryContext.Provider>
     )
 }
 
 export default LandingPage
-

@@ -1,11 +1,12 @@
 import './assets/css/App.css'
-import LandingPage from './containers/LandingPage'
+import LandingPage from './containers/Home'
+import Routes from './routes'
 
 function App() {
 
   return (
     <>
-      <LandingPage />
+      <Routes />
     </>
   );
 }
