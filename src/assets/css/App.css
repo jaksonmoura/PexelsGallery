@@ -171,6 +171,7 @@ header nav ul a:hover, header nav ul a:focus-visible {
   display: inline-flex;
   list-style-type: none;
   gap: 20px;
+  padding-left: 0;
 }
 .search ul.pre-queries a {
   color: #666;
