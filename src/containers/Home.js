@@ -1,7 +1,6 @@
-import React, {useState, useEffect, createContext, useMemo, useCallback} from 'react'
+import React, {useState, useEffect, createContext, useCallback} from 'react'
 import {key} from '../PEXELS_KEY.json'
-import mockdata from '../mockdata.json'
-import Header from '../components/Header'
+// import mockdata from '../mockdata.json'
 import Search from '../components/Search'
 import Gallery from '../components/Gallery'
 
@@ -11,7 +10,7 @@ export const GalleryContext = createContext()
 function LandingPage(){
     
     const searchPhotosUrl = "https://api.pexels.com/v1/search?query="
-    const curratedPhotosUrl = "https://api.pexels.com/v1/curated?per_page=18"
+    const curatedPhotosUrl = "https://api.pexels.com/v1/curated?per_page=18"
     const [searchTerm, setSearchTerm] = useState("")
     const searchTermRef = React.useRef("")
     const [photosData, setPhotosData] = useState({
@@ -76,7 +75,7 @@ function LandingPage(){
             nextTitle += " - Search for "+ query
             nextURL = "/?query=" + query
         } else {
-            fetchData(curratedPhotosUrl, false)
+            fetchData(curatedPhotosUrl, false)
         }
         searchTermRef.current.value = query
         changeSearchTerm(query);
@@ -97,7 +96,7 @@ function LandingPage(){
             setSearchTerm(urlQuery)
             fetchData(`${searchPhotosUrl}=${urlQuery}`, false)
         } else {
-            fetchData(curratedPhotosUrl, false)
+            fetchData(curatedPhotosUrl, false)
         }
         // console.log(window.location.search)
         // setPhotos(mockdata)
@@ -129,7 +128,7 @@ function LandingPage(){
 
     const loadMorePhotos = (event) =>{
         event.preventDefault()
-        let nextPage =  fetchData(photosData.next_page);
+        fetchData(photosData.next_page);
         // setPhotos(prevState => {
         //     return [
         //         ...prevState,
@@ -145,7 +144,7 @@ function LandingPage(){
             searchTermRef,
             setSearchTerm,
             searchPhotosUrl,
-            curratedPhotosUrl,
+            curatedPhotosUrl,
             photosData,
             setPhotosData,
             photos,
