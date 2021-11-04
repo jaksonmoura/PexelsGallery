@@ -125,6 +125,7 @@ header nav ul {
   align-items: center;
   list-style-type: none;
   gap: 20px;
+  padding: 0;
 }
 header nav ul a {
   color: #333;
