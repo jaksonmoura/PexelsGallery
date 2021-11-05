@@ -1,16 +1,16 @@
 import React, {useState, useEffect, createContext, useCallback} from 'react'
 import {key} from '../PEXELS_KEY.json'
-// import mockdata from '../mockdata.json'
+import mockdata from '../mockdata.json'
 import Search from '../components/Search'
 import Gallery from '../components/Gallery'
-
+import Modal from '../components/Modal'
 
 export const GalleryContext = createContext()
 
 function LandingPage(){
-    
     const searchPhotosUrl = "https://api.pexels.com/v1/search?query="
     const curatedPhotosUrl = "https://api.pexels.com/v1/curated?per_page=18"
+
     const [searchTerm, setSearchTerm] = useState("")
     const searchTermRef = React.useRef("")
     const [photosData, setPhotosData] = useState({
@@ -40,7 +40,6 @@ function LandingPage(){
         }],
         total_results: 0
     })
-    
     const [photos, setPhotos] = useState([
         {
             "id": 0,
@@ -64,6 +63,27 @@ function LandingPage(){
             "liked": false
         }
     ])
+
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [photo, setPhoto] = useState({
+        img: {
+            "id": 0,
+            "photographer": "",
+            "src": {
+                "original": "",
+                "large2x": "",
+                "large": "",
+            }
+        }
+    })
+
+    function openModal(){
+        setIsModalOpen(true)
+    }
+
+    function closeModal(){
+        setIsModalOpen(false)
+    }
 
     const onSearchSubmit = (event, str) =>{
         event.preventDefault()
@@ -91,7 +111,6 @@ function LandingPage(){
         let urlQuery = window.location.search
         if (urlQuery){
             urlQuery = urlQuery.split("=")[1]
-            console.log(urlQuery)
             searchTermRef.current.value = urlQuery
             setSearchTerm(urlQuery)
             fetchData(`${searchPhotosUrl}=${urlQuery}`, false)
@@ -113,16 +132,17 @@ function LandingPage(){
         })
         response.json().then(data => {
             setPhotosData(data)
-            if (append){
-                setPhotos(prevState => {
-                    return [
-                        ...prevState,
-                        ...data.photos
-                    ]
-                })
-            } else {
-                setPhotos(data.photos)
-            }
+            // if (append){
+            //     setPhotos(prevState => {
+            //         return [
+            //             ...prevState,
+            //             ...data.photos
+            //         ]
+            //     })
+            // } else {
+            //     setPhotos(data.photos)
+            // }
+            setPhotos(mockdata)
         })
     }
 
@@ -138,6 +158,31 @@ function LandingPage(){
     }
 
 
+    const fetchPhoto = async (id) => {
+        const response = await fetch(`https://api.pexels.com/v1/photos/${id}`, {
+            method: 'GET',
+            headers: new Headers({
+                'Authorization': key
+            })
+        })
+        response.json().then(data => {
+            // openModalRef.current = data
+            // setOpenModal({img: data})
+            console.log(mockdata[0])
+            setPhoto(mockdata[0])
+            openModal()
+        })
+    }
+    
+    const openModalBtn = (event, imgId) =>{
+        event.preventDefault()
+        fetchPhoto(imgId)
+
+        
+        // document.querySelector("body").style.overflow = "hidden";
+        
+    }
+
     return(
         <GalleryContext.Provider value={{
             searchTerm,
@@ -150,10 +195,13 @@ function LandingPage(){
             photos,
             setPhotos,
             loadMorePhotos,
-            onSearchSubmit
+            onSearchSubmit,
+            openModal,
+            openModalBtn
         }}>
             <Search />
             <Gallery />
+            <Modal isModalOpen={isModalOpen} photo={photo} />
         </GalleryContext.Provider>
     )
 }

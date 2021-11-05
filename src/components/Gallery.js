@@ -23,10 +23,11 @@ function Gallery(){
         return strSplit.slice(0, strSplit.length -1).join(" ")
     }
 
+
     const PhotoCard = (props) => {
         return (
             <li style={{animationDelay: `calc(20ms * ${props.id})`}}>
-                <a style={{backgroundColor: props.photo.avg_color}} href={props.photo.url}>
+                <a style={{backgroundColor: props.photo.avg_color}} href={props.photo.url} onClick={(e) => {gallery.openModalBtn(e, props.photo.id)}}>
                     <img src={props.photo.src.large} alt={formatAltText(props.photo.url)}/>
                 </a>
                 <div className="photographer">
