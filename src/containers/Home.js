@@ -1,6 +1,6 @@
 import React, {useState, useEffect, createContext, useCallback} from 'react'
 import {key} from '../PEXELS_KEY.json'
-import mockdata from '../mockdata.json'
+// import mockdata from '../mockdata.json'
 import Search from '../components/Search'
 import Gallery from '../components/Gallery'
 import Modal from '../components/Modal'
@@ -81,9 +81,9 @@ function LandingPage(){
         setIsModalOpen(true)
     }
 
-    function closeModal(){
-        setIsModalOpen(false)
-    }
+    // function closeModal(){
+    //     setIsModalOpen(false)
+    // }
 
     const onSearchSubmit = (event, str) =>{
         event.preventDefault()
@@ -117,8 +117,6 @@ function LandingPage(){
         } else {
             fetchData(curatedPhotosUrl, false)
         }
-        // console.log(window.location.search)
-        // setPhotos(mockdata)
     }, [])
 
     const fetchData = async (url, append = true) => {
@@ -132,29 +130,22 @@ function LandingPage(){
         })
         response.json().then(data => {
             setPhotosData(data)
-            // if (append){
-            //     setPhotos(prevState => {
-            //         return [
-            //             ...prevState,
-            //             ...data.photos
-            //         ]
-            //     })
-            // } else {
-            //     setPhotos(data.photos)
-            // }
-            setPhotos(mockdata)
+            if (append){
+                setPhotos(prevState => {
+                    return [
+                        ...prevState,
+                        ...data.photos
+                    ]
+                })
+            } else {
+                setPhotos(data.photos)
+            }
         })
     }
 
     const loadMorePhotos = (event) =>{
         event.preventDefault()
         fetchData(photosData.next_page);
-        // setPhotos(prevState => {
-        //     return [
-        //         ...prevState,
-        //         ...mockdata
-        //     ]
-        // })
     }
 
 
@@ -168,20 +159,19 @@ function LandingPage(){
         response.json().then(data => {
             // openModalRef.current = data
             // setOpenModal({img: data})
-            console.log(mockdata[0])
-            setPhoto(mockdata[0])
+            setPhoto(data)
             openModal()
         })
     }
     
-    const openModalBtn = (event, imgId) =>{
+    const openModalBtn =    (event, imgId) =>{
         event.preventDefault()
+        event.stopPropagation()
         fetchPhoto(imgId)
-
-        
         // document.querySelector("body").style.overflow = "hidden";
-        
     }
+
+    
 
     return(
         <GalleryContext.Provider value={{
@@ -201,7 +191,7 @@ function LandingPage(){
         }}>
             <Search />
             <Gallery />
-            <Modal isModalOpen={isModalOpen} photo={photo} />
+            <Modal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} photo={photo} />
         </GalleryContext.Provider>
     )
 }
