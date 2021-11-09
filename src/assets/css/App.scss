@@ -473,11 +473,12 @@ header{
         padding: 20px;
         border-radius: 10px;
         box-shadow: 5px 5px 20px rgba(black, .1);
-        height: 90vh;
+        max-height: 90vh;
+        height: max-content;
+        display: table;
 
         @media screen and (max-width: 600px){
             width: 90%;
-            height: max-content !important;
         }
 
         .modal-img{
