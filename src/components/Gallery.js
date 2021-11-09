@@ -34,7 +34,7 @@ function Gallery(){
                     <span>photo <span id="photo_by">by</span><br />
                         <a aria-labelledby={"photo_by photographer_"+props.photo.id} id={"photographer_"+props.photo.id} href={props.photo.photographer_url}>{props.photo.photographer}</a>
                     </span>
-                    <a href={props.photo.src.original} className="download-photo" download={props.photo.src.original} title="Download original size"><i aria-label="" className="material-icons">download</i></a>
+                    <a href={props.photo.src.original} className="download-photo" download={props.photo.src.original} title="Original size"><i aria-label="" className="material-icons">download</i></a>
                 </div>
             </li>
         )

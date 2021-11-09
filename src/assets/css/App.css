@@ -9,6 +9,7 @@ html {
 body {
   overflow-x: hidden;
   font-family: "Fira Sans", Helvetica, Arial, sans-serif;
+  margin: 0;
 }
 
 *, *:before, *:after {
@@ -80,7 +81,7 @@ p a {
 }
 @media screen and (max-width: 1250px) {
   .about-container {
-    width: 95%;
+    width: 90%;
   }
 }
 .about-container h1 {
@@ -119,6 +120,9 @@ header .logo {
   font-family: "DM Serif Display", Georgia, "Times New Roman", Times, serif;
   color: #000;
   font-size: 30px;
+  position: relative;
+  height: 24px;
+  line-height: 24px;
 }
 header nav ul {
   display: inline-flex;
@@ -126,18 +130,37 @@ header nav ul {
   list-style-type: none;
   gap: 20px;
   padding: 0;
+  margin: 0;
+  height: 100%;
+}
+header nav ul li {
+  display: contents;
+  height: 100%;
 }
 header nav ul a {
   color: #333;
+  position: relative;
+  height: 24px;
+  line-height: 150%;
 }
 header nav ul a:hover, header nav ul a:focus-visible {
   -webkit-text-decoration: underline 2px solid #666;
           text-decoration: underline 2px solid #666;
 }
+header a[aria-current]:before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: #666;
+  top: -17px;
+  z-index: -1;
+  left: 0;
+}
 
 .search form {
   margin: 0 auto 100px auto;
-  width: clamp(300px, 500px, 90%);
+  width: clamp(200px, 500px, 90%);
   text-align: center;
 }
 .search form .search-field {
@@ -237,6 +260,20 @@ header nav ul a:hover, header nav ul a:focus-visible {
 .my-masonry-grid_column li:hover .photographer:before, .my-masonry-grid_column li:focus-visible .photographer:before, .my-masonry-grid_column li:focus-within .photographer:before {
   opacity: 1;
   visibility: visible;
+}
+@media screen and (max-width: 600px) {
+  .my-masonry-grid_column li .photographer {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+  .my-masonry-grid_column li .photographer span {
+    visibility: hidden;
+    opacity: 0;
+  }
+  .my-masonry-grid_column li .photographer a.download-photo {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
 }
 .my-masonry-grid_column li a {
   width: 100%;
@@ -369,36 +406,68 @@ header nav ul a:hover, header nav ul a:focus-visible {
 
 .modal {
   width: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 100;
   top: 0;
   left: 0;
+  transition: all 0.3s ease-in-out;
   pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
 }
 .modal .modal-box {
+  transform: scale(0);
+  transition: all 0.15s cubic-bezier(0.65, 0.05, 0.36, 1);
   position: relative;
   margin: 5vh auto;
-  width: clamp(200px, 600px, 90vw);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  max-width: 600px;
   background: #fff;
   z-index: 101;
   pointer-events: all;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
+  height: 90vh;
+}
+@media screen and (max-width: 600px) {
+  .modal .modal-box {
+    width: 90%;
+    height: -webkit-max-content !important;
+    height: -moz-max-content !important;
+    height: max-content !important;
+  }
 }
 .modal .modal-box .modal-img {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .modal .modal-box .modal-img img {
-  width: 100%;
+  width: inherit;
+  max-height: 100%;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+}
+.modal.open {
+  pointer-events: all;
+  visibility: visible;
+  opacity: 1;
 }
 .modal.open:before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, 0.6);
   height: 100vh;
   width: 100vw;
+}
+.modal.open .modal-box {
+  transform: scale(1);
 }/*# sourceMappingURL=App.css.map */
