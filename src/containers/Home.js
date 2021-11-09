@@ -1,5 +1,4 @@
 import React, {useState, useEffect, createContext, useCallback} from 'react'
-import {key} from '../PEXELS_KEY.json'
 // import mockdata from '../mockdata.json'
 import Search from '../components/Search'
 import Gallery from '../components/Gallery'
@@ -125,7 +124,7 @@ function LandingPage(){
         const response = await fetch(url, {
             method: 'GET',
             headers: new Headers({
-                'Authorization': key
+                'Authorization': process.env.REACT_APP_PEXELS_KEY
             })
         })
         response.json().then(data => {
@@ -153,7 +152,7 @@ function LandingPage(){
         const response = await fetch(`https://api.pexels.com/v1/photos/${id}`, {
             method: 'GET',
             headers: new Headers({
-                'Authorization': key
+                'Authorization': process.env.REACT_APP_PEXELS_KEY
             })
         })
         response.json().then(data => {

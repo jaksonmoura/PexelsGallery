@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react'
-import {key} from '../PEXELS_KEY.json'
 
 const About = () => {
 
@@ -31,7 +30,7 @@ const About = () => {
         const response = await fetch("https://api.pexels.com/v1/search?per_page=1&query=plants", {
             method: 'GET',
             headers: new Headers({
-                'Authorization': key
+                'Authorization': process.env.REACT_APP_PEXELS_KEY
             })
         })
         response.json().then(data => {      

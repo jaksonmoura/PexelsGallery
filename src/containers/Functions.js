@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import {key} from '../PEXELS_KEY.json'
 import mockdata from '../mockdata.json'
 import Masonry from 'react-masonry-css'
 
@@ -89,7 +88,7 @@ const breakpointColumnsObj = {
         const response = await fetch(url, {
             method: 'GET',
             headers: new Headers({
-                'Authorization': key
+                'Authorization': process.env.REACT_APP_PEXELS_KEY
             })
         })
         response.json().then(data => {
