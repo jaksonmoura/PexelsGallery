@@ -430,14 +430,15 @@ header a[aria-current]:before {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.1);
-  height: 90vh;
+  max-height: 90vh;
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  display: table;
 }
 @media screen and (max-width: 600px) {
   .modal .modal-box {
     width: 90%;
-    height: -webkit-max-content !important;
-    height: -moz-max-content !important;
-    height: max-content !important;
   }
 }
 .modal .modal-box .modal-img {
